@@ -387,7 +387,7 @@
             white-space: pre-wrap;
             overflow-x: auto;
         }
-        .code-block .keyword { color: #90EE90; } /* Green for keywords (e.g., async, await) */
+        .code-block .keyword { color: #90EE90; } /* Green for keywords */
         .code-block .string { color: #87CEEB; } /* Blue for strings */
         .copy-btn {
             position: absolute;
@@ -395,7 +395,7 @@
             right: 5px;
             padding: 5px 10px;
             background: #4CAF50;
-            border: 1px solid #333; /* Match the border of the code block */
+            border: 1px solid #333;
             border-radius: 4px;
             color: #fff;
             cursor: pointer;
@@ -404,6 +404,83 @@
         }
         .copy-btn:hover {
             background: #45a049;
+        }
+        /* Installation Guide Section */
+        .installation-guide {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .installation-guide h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .guide-content {
+            max-width: 990px;
+            margin: 0 auto;
+            color: #fff;
+        }
+        .readme-section {
+            margin-bottom: 40px;
+        }
+        .readme-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .readme-section h4 {
+            font-size: 16px;
+            margin: 20px 0 10px;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .readme-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .readme-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .readme-section ul li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .readme-section ul li a {
+            color: #87CEEB;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .readme-section ul li a:hover {
+            opacity: 1;
+        }
+        .readme-section code {
+            background: #1A1A1A;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #90EE90;
+        }
+        .installation-guide .code-block {
+            position: relative;
+            margin: 10px 0;
+        }
+        .installation-guide .copy-btn {
+            top: 5px;
+            right: 5px;
         }
     </style>
 </head>
@@ -415,7 +492,7 @@
             <a href="#chat-api" onclick="scrollToSection('chat-api')">API</a>
             <a href="#blog" onclick="scrollToSection('blog')">Blog</a>
             <a href="#about" onclick="scrollToSection('about')">About</a>
-            <a href="#careers" onclick="scrollToSection('careers')">Careers</a>
+            <a href="#careers" onclick="scrollToSection('careers')">Installations</a>
         </div>
     </nav>
     <div class="hero" id="hero">
@@ -444,8 +521,8 @@
         <div class="blog-posts">
             <div class="blog-post">
                 <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Blog Post 1">
-                <h3>The Future of AI in Space Exploration</h3>
-                <p>Discover how DysonASI 2.0 is revolutionizing space research with cutting-edge AI tools, enabling faster data analysis and mission planning.</p>
+                <h3>The Future of AI-Powered Conversations</h3>
+                <p>AI chatbot designed to deliver intelligent, context-aware conversations. Powered by cutting-edge AI technology, it seamlessly integrates predefined responses with real-time knowledge</p>
                 <a href="#">Read More</a>
             </div>
             <div class="blog-post">
@@ -462,12 +539,12 @@
         <div class="chat-api-content">
             <p style="color: #fff; opacity: 0.8;"></p>
             <pre class="code-block" id="codeBlock">
-                <span class="keyword">import</span> OpenAI <span class="keyword">from</span> <span class="string">"openai"</span>;
+                <span class="keyword">import</span> DysonASI <span class="keyword">from</span> <span class="string">"dysonasi"</span>;
 
-                <span class="keyword">const</span> openai = <span class="keyword">new</span> OpenAI();
+                <span class="keyword">const</span> dysonasi = <span class="keyword">new</span> DysonASI();
 
                 <span class="keyword">async</span> <span class="keyword">function</span> main() {
-                    <span class="keyword">const</span> stream = <span class="keyword">await</span> openai.chat.completions.create({
+                    <span class="keyword">const</span> stream = <span class="keyword">await</span> dysonasi.chat.completions.create({
                         model: <span class="string">"dysonasi-2.0"</span>,
                         messages: [{ role: <span class="string">"user"</span>, content: <span class="string">"Hello, DysonASI!"</span> }],
                         stream: <span class="keyword">true</span>,
@@ -479,7 +556,7 @@
 
                 main();
             </pre>
-            <button class="copy-btn" onclick="copyCode()">Copy</button>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
     </div>
 
@@ -510,13 +587,101 @@
             </div>
         </div>
     </div>
+
+    <div class="installation-guide" id="careers">
+        <h2>DysonASI Installation Guide</h2>
+        <div class="guide-content">
+            <section class="readme-section">
+                <h3>Prerequisites</h3>
+                <p>Make sure you have the following installed on your system:</p>
+                <ul>
+                    <li><a href="https://nodejs.org/" target="_blank">Node.js</a> (LTS version recommended)</li>
+                    <li><a href="https://www.mongodb.com/" target="_blank">MongoDB</a> (for database storage)</li>
+                    <li>Git (to clone the repository)</li>
+                </ul>
+            </section>
+
+            <section class="readme-section">
+                <h3>Installation Steps</h3>
+
+                <h4>1. Clone the Repository</h4>
+                <pre class="code-block">
+git clone https://github.com/ChinmayBhattt/DysonASI-AI_Assistent.git
+cd DysonASI-AI_Assistent
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+                <h4>2. Install Dependencies</h4>
+                <pre class="code-block">
+npm install
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+
+                <h4>3. Configure Environment Variables</h4>
+                <p>Create a <code>.env</code> file in the root directory and add the necessary environment variables:</p>
+                <pre class="code-block">
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/dysonasi
+GEMINI_API_KEY=your_google_gemini_api_key
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>Replace <code>your_google_gemini_api_key</code> with your actual Gemini API key.</p>
+
+                <h4>4. Start MongoDB</h4>
+                <p>Make sure MongoDB is running locally. You can start it using:</p>
+                <pre class="code-block">
+mongod --dbpath /path/to/data
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>or if you are using MongoDB Atlas, ensure your connection string is correct in the <code>.env</code> file.</p>
+
+                <h4>5. Run the Server</h4>
+                <pre class="code-block">
+npm start
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>The server should now be running on <code>http://localhost:5000</code>.</p>
+
+                <h4>6. Access DysonASI</h4>
+                <p>Open <code>http://localhost:5000</code> in your browser or use an API client like Postman to interact with it.</p>
+            </section>
+
+            <section class="readme-section">
+                <h3>Additional Commands</h3>
+                <p>To run in development mode with hot-reloading:</p>
+                <pre class="code-block">
+npm run dev
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>To build for production:</p>
+                <pre class="code-block">
+npm run build
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </section>
+
+            <section class="readme-section">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li>If you face any dependency errors, try running:
+                        <pre class="code-block">
+npm install --force
+                        </pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </li>
+                    <li>Ensure MongoDB service is running before starting the server.</li>
+                    <li>Check <code>.env</code> configurations if the API does not respond correctly.</li>
+                </ul>
+            </section>
+
+        </div>
+    </div>
    
     <script>
-        function copyCode() {
-            const codeBlock = document.getElementById("codeBlock");
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling; // Get the pre.code-block before the button
             const text = codeBlock.textContent;
             navigator.clipboard.writeText(text).then(() => {
-                const button = document.querySelector(".copy-btn");
                 button.textContent = "Copied!";
                 setTimeout(() => button.textContent = "Copy", 2000); // Reset after 2 seconds
             }).catch(err => console.error("Failed to copy:", err));
