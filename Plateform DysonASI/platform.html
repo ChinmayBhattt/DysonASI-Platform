@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform DysonASI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0A0A0A;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0A0A0A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            position: relative;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, border-bottom 0.3s ease;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            border-bottom: 2px #fff;
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        .hero {
+            height: 80vh; /* Adjusted height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            text-align: center;
+            background-color: #0A0A0A;
+            position: relative;
+            padding-top: 80px; /* Reduced padding */
+        }
+        .hero h1 {
+            font-size: 150px;
+            font-weight: 700;
+            color: #fff;
+            margin: 20px 0 50px 0;
+            letter-spacing: 5px;
+            opacity: 0.1;
+            font-family: 'Helvetica', Arial, sans-serif;
+            transition: opacity 0.3s ease;
+        }
+        .hero h1:hover {
+            opacity: 1;
+        }
+        .hero-content {
+            margin-top: 20px; /* Adjusted spacing */
+            text-align: center;
+            z-index: 10;
+        }
+        .hero-content h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .hero-content .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .hero-content .buttons a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            font-size: 16px;
+            opacity: 0.7;
+            transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+        }
+        .hero-content .buttons a:hover {
+            color: #000;
+            background-color: #fff;
+            border-color: #fff;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .hero-content .buttons a:last-child {
+            background-color: transparent;
+            border-color: #fff;
+            position: relative;
+        }
+        .hero-content .buttons a:last-child:hover {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: scale(1.05);
+        }
+        .hero-content .buttons a:last-child::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 16px;
+            transition: margin-left 0.3s ease;
+        }
+        .hero-content .buttons a:last-child:hover::after {
+            margin-left: 12px;
+        }
+        .copyright {
+            text-align: center;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .copyright p {
+            color: #fff;
+            font-size: 14px;
+            margin: 0;
+        }
+        .copyright:hover {
+            opacity: 1;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0A0A0A;
+            padding: 20px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: flex-start;
+            gap: 17px;
+            margin-top: -17px;
+            padding-left: 40px;
+        }
+        .footer-social a {
+            color: #fff;
+            font-size: 17px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            text-decoration: none;
+        }
+        .footer-social a:hover {
+            opacity: 1;
+        }
+        .footer-social i {
+            display: inline-block;
+        }
+        .blog {
+            padding: 60px 40px 60px 0px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            gap: 30px;
+            animation: slide 20s linear infinite;
+        }
+        .card {
+            min-width: 360px;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            opacity: 1;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .card p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .card a.read-more {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.7;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: opacity 0.3s ease, border-color 0.3s ease;
+        }
+        .card a.read-more:hover {
+            opacity: 1;
+            border-bottom: 1px solid #fff;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .documentation {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .documentation h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .documentation-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .doc-intro {
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .doc-intro h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .doc-intro p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .doc-sections {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .doc-section {
+            max-width: 360px;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .doc-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .doc-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .doc-section ul, .doc-section ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .doc-section ul li, .doc-section ol li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .doc-section a {
+            color: #87CEEB;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .doc-section a:hover {
+            opacity: 0.8;
+        }
+        .chat-api {
+            padding: 60px 10px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .chat-api h2 {
+            font-size: 24px;
+            margin-bottom: -10px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .chat-api-content {
+            max-width: 990px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .code-block {
+            position: relative;
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #fff;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .code-block .keyword { color: #90EE90; }
+        .code-block .string { color: #87CEEB; }
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: #4CAF50;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        .about {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+        }
+        .about h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .about-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-text {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #1A1A1A;
+            border-radius: 8px;
+        }
+        .about-text h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .about-stats {
+            max-width: 300px;
+            padding: 20px;
+            background-color: #2A2A2A;
+            border-radius: 8px;
+        }
+        .about-stats h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .about-stats p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .installation-guide {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .installation-guide h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .guide-content {
+            max-width: 990px;
+            margin: 0 auto;
+            color: #fff;
+        }
+        .readme-section {
+            margin-bottom: 40px;
+        }
+        .readme-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .readme-section h4 {
+            font-size: 16px;
+            margin: 20px 0 10px;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .readme-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .readme-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .readme-section ul li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .readme-section ul li a {
+            color: #87CEEB;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .readme-section ul li a:hover {
+            opacity: 1;
+        }
+        .readme-section code {
+            background: #1A1A1A;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #90EE90;
+        }
+        .installation-guide .code-block {
+            position: relative;
+            margin: 10px 0;
+        }
+        .installation-guide .copy-btn {
+            top: 5px;
+            right: 5px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background-color: #1A1A1A;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            color: #fff;
+            text-align: left;
+        }
+        .popup-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .popup-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #fff;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .close-btn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <img src="favicon.ico" alt="Logo" class="logo">
+        <div class="nav-links">
+            <a href="#hero" onclick="scrollToSection('hero')">DysonASI</a>
+            <a href="#chat-api" onclick="scrollToSection('chat-api')">API</a>
+            <a href="#blog" onclick="scrollToSection('blog')">Features</a>
+            <a href="#documentation" onclick="scrollToSection('documentation')">Docs</a>
+            <a href="#about" onclick="scrollToSection('about')">About</a>
+            <a href="#careers" onclick="scrollToSection('careers')">Installations</a>
+        </div>
+    </nav>
+
+    <div class="hero" id="hero">
+        <h1>DysonASI</h1>
+        <div class="hero-content">
+            <h2>Welcome To DysonASI</h2>
+            <div class="buttons">
+                <a href="https://chinmaybhattt.github.io/DysonASI-AI_Assistent/" target="_blank">Try Now</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="copyright">
+            <p>© 2025 DysonASI. All rights reserved.</p>
+        </div>
+        <div class="footer-social">
+            <a href="https://x.com/DysonASI" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@dysonasi" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/in/chinmaybhattt" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/dysonasi" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://discord.com/invite/6RpzEHYdKt" target="_blank"><i class="fa-brands fa-discord"></i></a>
+        </div>
+    </footer>
+
+    <div class="blog" id="blog">
+        <h2>Features</h2>
+        <div class="slider-container">
+            <div class="slider">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 1">
+                    <h3>The Future of AI-Powered Conversations</h3>
+                    <p>AI chatbot designed to deliver intelligent, context-aware conversations. Powered by cutting-edge AI technology, it seamlessly integrates predefined responses with real-time knowledge.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 2">
+                    <h3>Partnering for Progress: Our $6B Milestone</h3>
+                    <p>Learn about our latest funding round and how it’s fueling innovation across industries with our esteemed partners.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 3">
+                    <h3>Exploring the Cosmos with AI</h3>
+                    <p>Leverage DysonASI to simulate and optimize space missions, pushing the boundaries of interplanetary exploration.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+                <!-- Duplicates for infinite scroll -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 1">
+                    <h3>The Future of AI-Powered Conversations</h3>
+                    <p>AI chatbot designed to deliver intelligent, context-aware conversations. Powered by cutting-edge AI technology, it seamlessly integrates predefined responses with real-time knowledge.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 2">
+                    <h3>Partnering for Progress: Our $6B Milestone</h3>
+                    <p>Learn about our latest funding round and how it’s fueling innovation across industries with our esteemed partners.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 3">
+                    <h3>Exploring the Cosmos with AI</h3>
+                    <p>Leverage DysonASI to simulate and optimize space missions, pushing the boundaries of interplanetary exploration.</p>
+                    <!-- <a href="#" class="read-more">Read More</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="documentation" id="documentation">
+        <h2>Documentation</h2>
+        <div class="documentation-content">
+            <div class="doc-intro">
+                <h3>Getting Started with DysonASI</h3>
+                <p>DysonASI is a powerful AI platform designed to provide intelligent conversations and real-time solutions. This documentation will guide you through the platform's features, setup process, and usage to help you make the most of its capabilities.</p>
+            </div>
+            <div class="doc-sections">
+                <div class="doc-section">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Context-Aware Chat:</strong> Get smart, relevant responses in real-time.</li>
+                        <li><strong>Scalable API:</strong> Easily integrate DysonASI into your projects.</li>
+                        <li><strong>Multi-Industry Use:</strong> Adaptable for fields like healthcare, education, and space exploration.</li>
+                        <li><strong>Easy Setup:</strong> Quick start with simple installation steps.</li>
+                    </ul>
+                </div>
+                <div class="doc-section">
+                    <h3>How to Use DysonASI</h3>
+                    <p>Follow these steps to get started with DysonASI:</p>
+                    <ol>
+                        <li><strong>Install:</strong> Set up DysonASI using the <a href="#careers">Installations</a> guide below.</li>
+                        <li><strong>Integrate API:</strong> Use the code snippet from the <a href="#chat-api">Chat API</a> section.</li>
+                        <li><strong>Explore:</strong> Try it out via the "Try Now" button in the hero section.</li>
+                        <li><strong>Customize:</strong> Adjust settings and inputs based on your needs.</li>
+                    </ol>
+                </div>
+                <div class="doc-section">
+                    <h3>Support & Resources</h3>
+                    <p>Need help? Check out these resources:</p>
+                    <ul>
+                        <li><a href="https://discord.com/invite/6RpzEHYdKt" target="_blank">Join our Discord Community</a></li>
+                        <li><a href="https://github.com/ChinmayBhattt/DysonASI-AI_Assistent" target="_blank">GitHub Repository</a></li>
+                        <li>Contact us via <a href="https://x.com/DysonASI" target="_blank">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-api" id="chat-api">
+        <h2>Chat API</h2>
+        <div class="chat-api-content">
+            <p style="color: #fff; opacity: 0.8;"></p>
+            <pre class="code-block" id="codeBlock">
+                <span class="keyword">import</span> DysonASI <span class="keyword">from</span> <span class="string">"dysonasi"</span>;
+
+                <span class="keyword">const</span> dysonasi = <span class="keyword">new</span> DysonASI();
+
+                <span class="keyword">async</span> <span class="keyword">function</span> main() {
+                    <span class="keyword">const</span> stream = <span class="keyword">await</span> dysonasi.chat.completions.create({
+                        model: <span class="string">"dysonasi-2.0"</span>,
+                        messages: [{ role: <span class="string">"user"</span>, content: <span class="string">"Hello, DysonASI!"</span> }],
+                        stream: <span class="keyword">true</span>,
+                    });
+                    <span class="keyword">for</span> <span class="keyword">await</span> (<span class="keyword">const</span> chunk <span class="keyword">of</span> stream) {
+                        process.stdout.write(chunk.choices[0]?.delta?.content || <span class="string">""</span>);
+                    }
+                }
+
+                main();
+            </pre>
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+    </div>
+
+    <div class="about" id="about">
+        <h2>About Us</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Founder: Chinmay Bhatt</h3>
+                <p>DysonASI was founded in 2025 by Chinmay Bhatt, a passionate Front-End Developer and AI innovator currently pursuing a BTech in Artificial Intelligence and Data Science at Arya College of Engineering and IT, Jaipur. With expertise in C++, Python, JavaScript, and technologies like React, TensorFlow, and OpenCV, Chinmay has built a strong foundation in creating user-friendly, efficient solutions. His notable projects, such as real-time hand gesture recognition and the QuickCBT mobile app, reflect his ability to blend creativity with technical prowess. As the leader of @LightHack, a hackathon-focused initiative, Chinmay thrives on collaboration and innovation, driving DysonASI with a vision to redefine the future of artificial superintelligence.</p>
+
+                <h3>Why We Created DysonASI</h3>
+                <p>Chinmay founded DysonASI to address the limitations of conventional technology and unlock new possibilities through artificial superintelligence. Inspired by his work in AI-driven applications and simulations—like rocket design with OpenRocket—he envisioned a platform that could push human potential beyond current boundaries. DysonASI is the result of his ambition to create a tool that not only solves practical problems but also inspires breakthroughs in fields like healthcare, education, and space exploration. For Chinmay, it’s about building a legacy of innovation that empowers individuals and organizations to tackle the world’s toughest challenges.</p>
+
+                <h3>Our Mission</h3>
+                <p>At DysonASI, our mission is to develop artificial superintelligence that accelerates human discovery and transforms industries globally. We are committed to crafting intelligent systems that provide actionable insights, optimize complex processes, and adapt seamlessly to diverse needs. By prioritizing practical impact and responsible innovation, we aim to empower humanity with tools that drive progress and foster a deeper understanding of the universe.</p>
+
+                <h3>What We Do</h3>
+                <p>DysonASI is a pioneering project that combines a cutting-edge AI assistant with a scalable platform designed for real-world applications. We focus on creating solutions that range from context-aware conversational tools to advanced simulations for technical design. Our work integrates Chinmay’s expertise in web development, AI, and data science to deliver systems that are both powerful and accessible, serving industries as varied as aerospace, education, and beyond.</p>
+
+                <h3>Our Future Plans</h3>
+                <p>Looking ahead, DysonASI aims to evolve into a comprehensive ecosystem of artificial superintelligence. Our plans include expanding the AI assistant’s capabilities to handle multi-modal inputs—like voice, gestures, and text—while enhancing the platform’s infrastructure for global scalability. We intend to collaborate with innovators worldwide, integrating DysonASI into sectors such as precision medicine, sustainable energy, and interplanetary exploration. By 2030, we aspire to launch initiatives that leverage our technology for large-scale societal benefits, such as personalized education platforms and AI-driven climate solutions.</p>
+
+                <h3>Our Vision</h3>
+                <p>Our vision is to create a future where artificial superintelligence amplifies human ingenuity and reshapes civilization. We see DysonASI as a cornerstone of this transformation—enabling breakthroughs like autonomous space missions, predictive healthcare systems, and universal knowledge access. By pushing the limits of machine learning and computational intelligence, we strive to build a sustainable, interconnected world where technology and humanity unite to explore the cosmos and solve its greatest mysteries.</p>
+            </div>
+            <div class="about-stats">
+                <h3>By the Numbers</h3>
+                <p><strong>Founded:</strong> 2025</p>
+                <p><strong>Founder:</strong> Chinmay Bhatt</p>
+                <p><strong>Core Team:</strong> 15+ Innovators</p>
+                <p><strong>Funding:</strong> $6B+ Raised</p>
+                <p><strong>Users:</strong> 1M+ Worldwide</p>
+                <p><strong>Projects:</strong> 50+ Active Initiatives</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="installation-guide" id="careers">
+        <h2>DysonASI Installation Guide</h2>
+        <div class="guide-content">
+            <section class="readme-section">
+                <h3>Prerequisites</h3>
+                <p>Make sure you have the following installed on your system:</p>
+                <ul>
+                    <li><a href="https://nodejs.org/" target="_blank">Node.js</a> (LTS version recommended)</li>
+                    <li><a href="https://www.mongodb.com/" target="_blank">MongoDB</a> (for database storage)</li>
+                    <li>Git (to clone the repository)</li>
+                </ul>
+            </section>
+            <section class="readme-section">
+                <h3>Installation Steps</h3>
+                <h4>1. Clone the Repository</h4>
+                <pre class="code-block">
+git clone https://github.com/ChinmayBhattt/DysonASI-AI_Assistent.git
+cd DysonASI-AI_Assistent
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <h4>2. Install Dependencies</h4>
+                <pre class="code-block">
+npm install
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <h4>3. Configure Environment Variables</h4>
+                <p>Create a <code>.env</code> file in the root directory and add the necessary environment variables:</p>
+                <pre class="code-block">
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/dysonasi
+GEMINI_API_KEY=your_google_gemini_api_key
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>Replace <code>your_google_gemini_api_key</code> with your actual Gemini API key.</p>
+                <h4>4. Start MongoDB</h4>
+                <p>Make sure MongoDB is running locally. You can start it using:</p>
+                <pre class="code-block">
+mongod --dbpath /path/to/data
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>or if you are using MongoDB Atlas, ensure your connection string is correct in the <code>.env</code> file.</p>
+                <h4>5. Run the Server</h4>
+                <pre class="code-block">
+npm start
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>The server should now be running on <code>http://localhost:5000</code>.</p>
+                <h4>6. Access DysonASI</h4>
+                <p>Open <code>http://localhost:5000</code> in your browser or use an API client like Postman to interact with it.</p>
+            </section>
+            <section class="readme-section">
+                <h3>Additional Commands</h3>
+                <p>To run in development mode with hot-reloading:</p>
+                <pre class="code-block">
+npm run dev
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <p>To build for production:</p>
+                <pre class="code-block">
+npm run build
+                </pre>
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            </section>
+            <section class="readme-section">
+                <h3>Troubleshooting</h3>
+                <ul>
+                    <li>If you face any dependency errors, try running:
+                        <pre class="code-block">
+npm install --force
+                        </pre>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    </li>
+                    <li>Ensure MongoDB service is running before starting the server.</li>
+                    <li>Check <code>.env</code> configurations if the API does not respond correctly.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn" onclick="closePopup()">×</span>
+            <h3 id="popup-title">Popup Title</h3>
+            <p id="popup-text">This is the default popup content. Click "Read More" on a feature to see more details here.</p>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "Copied!";
+                setTimeout(() => button.textContent = "Copy", 2000);
+            }).catch(err => console.error("Failed to copy:", err));
+        }
+
+        function scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+            });
+        });
+
+        function openPopup(title, text) {
+            document.getElementById('popup-title').textContent = title;
+            document.getElementById('popup-text').textContent = text;
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.querySelectorAll('.card a.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.parentElement.querySelector('h3').textContent;
+                let text = '';
+                if (title === 'The Future of AI-Powered Conversations') {
+                    text = 'DysonASI’s AI chatbot is built to revolutionize how we interact with technology. Leveraging advanced natural language processing and real-time data, it provides seamless, context-aware responses that adapt to user needs. Whether you’re seeking answers, brainstorming ideas, or automating tasks, DysonASI is your intelligent companion.';
+                } else if (title === 'Partnering for Progress: Our $6B Milestone') {
+                    text = 'Our recent $6B funding milestone marks a significant step forward in our journey. This investment empowers us to deepen collaborations with global leaders across industries like healthcare, space exploration, and renewable energy. Together, we’re driving innovation that tackles humanity’s biggest challenges.';
+                } else if (title === 'Exploring the Cosmos with AI') {
+                    text = 'DysonASI empowers the future of space exploration by simulating and optimizing mission parameters. From trajectory planning to resource management, our AI tools help engineers and scientists design more efficient and ambitious interplanetary missions.';
+                }
+                openPopup(title, text);
+            });
+        });
+
+        document.getElementById('popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Duplicate slider content for infinite scroll
+        const slider = document.querySelector('.slider');
+        slider.innerHTML += slider.innerHTML; // Duplicate the cards
+    </script>
+</body>
+</html>
