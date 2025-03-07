@@ -4,12 +4,581 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platform DysonASI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta name="description" content="DysonASI, founded by Chinmay Bhatt, is an AI platform that builds artificial superintelligence, taking us closer to super intelligence">
     <meta name="keywords" content="DysonASI, Chinmay Bhatt, founder of DysonASI, AI platform, artificial superintelligence, AI chatbot, super intelligence, Chinmay Bhatt AI, DysonASI AI">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="style.css">
-    
-       
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0A0A0A;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .navbar {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0A0A0A;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 40px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            position: relative;
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            text-transform: uppercase;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, border-bottom 0.3s ease;
+        }
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            border-bottom: 2px #fff;
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        .hero {
+            height: 80vh; /* Adjusted height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+            text-align: center;
+            background-color: #0A0A0A;
+            position: relative;
+            padding-top: 80px; /* Reduced padding */
+        }
+        .hero h1 {
+            font-size: 150px;
+            font-weight: 700;
+            color: #fff;
+            margin: 20px 0 50px 0;
+            letter-spacing: 5px;
+            opacity: 0.1;
+            font-family: 'Helvetica', Arial, sans-serif;
+            transition: opacity 0.3s ease;
+        }
+        .hero h1:hover {
+            opacity: 1;
+        }
+        .hero-content {
+            margin-top: 20px; /* Adjusted spacing */
+            text-align: center;
+            z-index: 10;
+        }
+        .hero-content h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .hero-content .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        .hero-content .buttons a {
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            font-size: 16px;
+            opacity: 0.7;
+            transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+        }
+        .hero-content .buttons a:hover {
+            color: #000;
+            background-color: #fff;
+            border-color: #fff;
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        .hero-content .buttons a:last-child {
+            background-color: transparent;
+            border-color: #fff;
+            position: relative;
+        }
+        .hero-content .buttons a:last-child:hover {
+            background-color: #fff;
+            color: #000;
+            border-color: #fff;
+            transform: scale(1.05);
+        }
+        .hero-content .buttons a:last-child::after {
+            content: '→';
+            margin-left: 8px;
+            font-size: 16px;
+            transition: margin-left 0.3s ease;
+        }
+        .hero-content .buttons a:last-child:hover::after {
+            margin-left: 12px;
+        }
+        .copyright {
+            text-align: center;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .copyright p {
+            color: #fff;
+            font-size: 14px;
+            margin: 0;
+        }
+        .copyright:hover {
+            opacity: 1;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #0A0A0A;
+            padding: 20px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .footer-social {
+            display: flex;
+            justify-content: flex-start;
+            gap: 17px;
+            margin-top: -17px;
+            padding-left: 40px;
+        }
+        .footer-social a {
+            color: #fff;
+            font-size: 17px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            text-decoration: none;
+        }
+        .footer-social a:hover {
+            opacity: 1;
+        }
+        .footer-social i {
+            display: inline-block;
+        }
+        .blog {
+            padding: 60px 40px 60px 0px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            gap: 30px;
+            animation: slide 20s linear infinite;
+        }
+        .card {
+            min-width: 360px;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .card:hover {
+            transform: scale(1.03);
+            opacity: 1;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .card p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .card a.read-more {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: 0.7;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: opacity 0.3s ease, border-color 0.3s ease;
+        }
+        .card a.read-more:hover {
+            opacity: 1;
+            border-bottom: 1px solid #fff;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .documentation {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+        }
+        .documentation h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .documentation-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .doc-intro {
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .doc-intro h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .doc-intro p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .doc-sections {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .doc-section {
+            max-width: 360px;
+            background-color: #1A1A1A;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .doc-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .doc-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .doc-section ul, .doc-section ol {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .doc-section ul li, .doc-section ol li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .doc-section a {
+            color: #87CEEB;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .doc-section a:hover {
+            opacity: 0.8;
+        }
+        .chat-api {
+            padding: 60px 10px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .chat-api h2 {
+            font-size: 24px;
+            margin-bottom: -10px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .chat-api-content {
+            max-width: 990px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .code-block {
+            position: relative;
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 25px;
+            border: 1px solid #333;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #fff;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .code-block .keyword { color: #90EE90; }
+        .code-block .string { color: #87CEEB; }
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            background: #4CAF50;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        .copy-btn:hover {
+            background: #45a049;
+        }
+        .about {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+        }
+        .about h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .about-content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .about-text {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #1A1A1A;
+            border-radius: 8px;
+        }
+        .about-text h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .about-stats {
+            max-width: 300px;
+            padding: 20px;
+            background-color: #2A2A2A;
+            border-radius: 8px;
+        }
+        .about-stats h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .about-stats p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .installation-guide {
+            padding: 60px 40px;
+            background-color: #0A0A0A;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .installation-guide h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #fff;
+            opacity: 0.8;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .guide-content {
+            max-width: 990px;
+            margin: 0 auto;
+            color: #fff;
+        }
+        .readme-section {
+            margin-bottom: 40px;
+        }
+        .readme-section h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .readme-section h4 {
+            font-size: 16px;
+            margin: 20px 0 10px;
+            color: #fff;
+            opacity: 0.8;
+        }
+        .readme-section p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+        .readme-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        .readme-section ul li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+        .readme-section ul li a {
+            color: #87CEEB;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .readme-section ul li a:hover {
+            opacity: 1;
+        }
+        .readme-section code {
+            background: #1A1A1A;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #90EE90;
+        }
+        .installation-guide .code-block {
+            position: relative;
+            margin: 10px 0;
+        }
+        .installation-guide .copy-btn {
+            top: 5px;
+            right: 5px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background-color: #1A1A1A;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            color: #fff;
+            text-align: left;
+        }
+        .popup-content h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #fff;
+            opacity: 0.9;
+        }
+        .popup-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #fff;
+            opacity: 0.7;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #fff;
+            opacity: 0.7;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        .close-btn:hover {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -17,7 +586,7 @@
         <div class="nav-links">
             <a href="#hero" onclick="scrollToSection('hero')">DysonASI</a>
             <a href="#chat-api" onclick="scrollToSection('chat-api')">API</a>
-            <a href="#blog" onclick="scrollToSection('blog')">Features</a>
+            <!-- <a href="#blog" onclick="scrollToSection('blog')">Features</a> -->
             <a href="#documentation" onclick="scrollToSection('documentation')">Docs</a>
             <a href="#about" onclick="scrollToSection('about')">About</a>
             <a href="#careers" onclick="scrollToSection('careers')">Installations</a>
@@ -47,7 +616,7 @@
         </div>
     </footer>
 
-    <div class="blog" id="blog">
+    <!-- <div class="blog" id="blog">
         <h2>Features</h2>
         <div class="slider-container">
             <div class="slider">
@@ -55,43 +624,44 @@
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 1">
                     <h3>The Future of AI-Powered Conversations</h3>
                     <p>AI chatbot designed to deliver intelligent, context-aware conversations. Powered by cutting-edge AI technology, it seamlessly integrates predefined responses with real-time knowledge.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
                 <div class="card">
                     <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 2">
                     <h3>Partnering for Progress: Our $6B Milestone</h3>
                     <p>Learn about our latest funding round and how it’s fueling innovation across industries with our esteemed partners.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
                 <div class="card">
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 3">
                     <h3>Exploring the Cosmos with AI</h3>
                     <p>Leverage DysonASI to simulate and optimize space missions, pushing the boundaries of interplanetary exploration.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
-                <!-- Duplicates for infinite scroll -->
+                Duplicates for infinite scroll
                 <div class="card">
                     <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 1">
                     <h3>The Future of AI-Powered Conversations</h3>
                     <p>AI chatbot designed to deliver intelligent, context-aware conversations. Powered by cutting-edge AI technology, it seamlessly integrates predefined responses with real-time knowledge.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
                 <div class="card">
                     <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 2">
                     <h3>Partnering for Progress: Our $6B Milestone</h3>
                     <p>Learn about our latest funding round and how it’s fueling innovation across industries with our esteemed partners.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
                 <div class="card">
                     <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Feature 3">
                     <h3>Exploring the Cosmos with AI</h3>
                     <p>Leverage DysonASI to simulate and optimize space missions, pushing the boundaries of interplanetary exploration.</p>
-                    <!-- <a href="#" class="read-more">Read More</a> -->
+                    <a href="#" class="read-more">Read More</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
+    
     <div class="documentation" id="documentation">
         <h2>Documentation</h2>
         <div class="documentation-content">
@@ -279,7 +849,68 @@ npm install --force
         </div>
     </div>
 
-    <script defer src="script.js"></script>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const text = codeBlock.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                button.textContent = "Copied!";
+                setTimeout(() => button.textContent = "Copy", 2000);
+            }).catch(err => console.error("Failed to copy:", err));
+        }
 
+        function scrollToSection(sectionId) {
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+            });
+        });
+
+        function openPopup(title, text) {
+            document.getElementById('popup-title').textContent = title;
+            document.getElementById('popup-text').textContent = text;
+            document.getElementById('popup').style.display = 'flex';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        document.querySelectorAll('.card a.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.parentElement.querySelector('h3').textContent;
+                let text = '';
+                if (title === 'The Future of AI-Powered Conversations') {
+                    text = 'DysonASI’s AI chatbot is built to revolutionize how we interact with technology. Leveraging advanced natural language processing and real-time data, it provides seamless, context-aware responses that adapt to user needs. Whether you’re seeking answers, brainstorming ideas, or automating tasks, DysonASI is your intelligent companion.';
+                } else if (title === 'Partnering for Progress: Our $6B Milestone') {
+                    text = 'Our recent $6B funding milestone marks a significant step forward in our journey. This investment empowers us to deepen collaborations with global leaders across industries like healthcare, space exploration, and renewable energy. Together, we’re driving innovation that tackles humanity’s biggest challenges.';
+                } else if (title === 'Exploring the Cosmos with AI') {
+                    text = 'DysonASI empowers the future of space exploration by simulating and optimizing mission parameters. From trajectory planning to resource management, our AI tools help engineers and scientists design more efficient and ambitious interplanetary missions.';
+                }
+                openPopup(title, text);
+            });
+        });
+
+        document.getElementById('popup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Duplicate slider content for infinite scroll
+        const slider = document.querySelector('.slider');
+        slider.innerHTML += slider.innerHTML; // Duplicate the cards
+    </script>
+    
 </body>
 </html>
