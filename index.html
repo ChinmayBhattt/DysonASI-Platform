@@ -826,6 +826,163 @@
         .rainbow-text:hover::after {
             opacity: 0.3;
         }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background-color: #0A0A0A;
+                padding: 20px;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+                z-index: 1000;
+            }
+
+            .rainbow-text {
+                font-size: 60px;
+                margin-bottom: 1rem;
+            }
+
+            .hero {
+                padding: 20px;
+                height: 100vh;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 18px;
+                margin-bottom: 20px;
+                padding: 0 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+                padding: 0 20px;
+            }
+
+            .buttons a {
+                width: 100%;
+                max-width: 280px;
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .footer {
+                padding: 15px 20px;
+            }
+
+            .footer-social {
+                justify-content: center;
+                padding-left: 0;
+                margin-top: 0;
+            }
+
+            .copyright {
+                margin-bottom: 10px;
+            }
+
+            .copyright p {
+                font-size: 12px;
+            }
+
+            /* Documentation section responsive */
+            .documentation {
+                padding: 40px 20px;
+            }
+
+            .doc-sections {
+                gap: 15px;
+            }
+
+            .doc-section {
+                width: 100%;
+                padding: 15px;
+            }
+
+            /* Chat API section responsive */
+            .chat-api {
+                padding: 40px 15px;
+            }
+
+            .code-block {
+                padding: 15px;
+                font-size: 12px;
+                border-radius: 15px;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* About section responsive */
+            .about {
+                padding: 60px 20px;
+            }
+
+            .about-content {
+                gap: 30px;
+            }
+
+            .about-text {
+                padding: 20px;
+            }
+
+            .founder-section,
+            .company-section,
+            .mission-section,
+            .vision-section,
+            .impact-section {
+                padding: 15px;
+            }
+
+            .stat-item {
+                padding: 15px 10px;
+            }
+
+            .stat-item p {
+                font-size: 12px;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 380px) {
+            .rainbow-text {
+                font-size: 40px;
+            }
+
+            .hero h2 {
+                font-size: 16px;
+            }
+
+            .buttons a {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1200,6 +1357,12 @@ npm install --force
         // Duplicate slider content for infinite scroll
         const slider = document.querySelector('.slider');
         slider.innerHTML += slider.innerHTML; // Duplicate the cards
+
+        // Add hamburger menu button to HTML
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
     </script>
     
 </body>
