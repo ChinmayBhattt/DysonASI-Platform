@@ -120,3 +120,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Download popup functionality
+function showDownloadPopup() {
+    const popup = document.getElementById('downloadPopup');
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Add click event listener to the document body
+    document.body.addEventListener('click', closePopupOnOutsideClick);
+}
+
+// Function to close popup when clicking outside
+function closePopupOnOutsideClick(e) {
+    const popup = document.getElementById('downloadPopup');
+    const popupContent = popup.querySelector('.download-popup-content');
+    
+    // If click is outside popup content, close the popup
+    if (!popupContent.contains(e.target) && !e.target.classList.contains('download-button')) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+        // Remove the event listener after closing
+        document.body.removeEventListener('click', closePopupOnOutsideClick);
+    }
+}
+
+// Close popup when pressing Escape key
+document.addEventListener('keydown', function(e) {
+    const popup = document.getElementById('downloadPopup');
+    if (e.key === 'Escape' && popup.classList.contains('active')) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+        document.body.removeEventListener('click', closePopupOnOutsideClick);
+    }
+});
