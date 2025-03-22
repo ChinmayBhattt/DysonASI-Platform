@@ -131,6 +131,14 @@ function showDownloadPopup() {
     document.body.addEventListener('click', closePopupOnOutsideClick);
 }
 
+// Function to close download popup
+function closeDownloadPopup() {
+    const popup = document.getElementById('downloadPopup');
+    popup.classList.remove('active');
+    document.body.style.overflow = '';
+    document.body.removeEventListener('click', closePopupOnOutsideClick);
+}
+
 // Function to close popup when clicking outside
 function closePopupOnOutsideClick(e) {
     const popup = document.getElementById('downloadPopup');
@@ -138,10 +146,7 @@ function closePopupOnOutsideClick(e) {
     
     // If click is outside popup content, close the popup
     if (!popupContent.contains(e.target) && !e.target.classList.contains('download-button')) {
-        popup.classList.remove('active');
-        document.body.style.overflow = '';
-        // Remove the event listener after closing
-        document.body.removeEventListener('click', closePopupOnOutsideClick);
+        closeDownloadPopup();
     }
 }
 
@@ -149,8 +154,6 @@ function closePopupOnOutsideClick(e) {
 document.addEventListener('keydown', function(e) {
     const popup = document.getElementById('downloadPopup');
     if (e.key === 'Escape' && popup.classList.contains('active')) {
-        popup.classList.remove('active');
-        document.body.style.overflow = '';
-        document.body.removeEventListener('click', closePopupOnOutsideClick);
+        closeDownloadPopup();
     }
 });

@@ -1272,6 +1272,7 @@ body {
 }
 
 .download-popup-content {
+    position: relative;
     background-color: #1A1A1A;
     padding: 40px;
     border-radius: 16px;
@@ -1373,4 +1374,31 @@ body {
         padding: 12px 25px;
         font-size: 16px;
     }
+}
+
+.popup-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1002;
+}
+
+.popup-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.popup-close-btn i {
+    font-size: 18px;
 }
