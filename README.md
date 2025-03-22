@@ -1,5 +1,5 @@
 
-<h1 align="center">DysonASI - AI Assistent</h1>
+<h1 align="center">DysonASI-Platform</h1>
 
 <p align="center">
   <strong>Transforming the Future, One Conversation at a Time</strong>  
