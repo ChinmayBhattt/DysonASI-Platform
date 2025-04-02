@@ -82,6 +82,32 @@ body {
     padding-top: 80px;
 }
 
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at top right,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 50%
+    );
+    animation: glowShift 5s ease-in-out infinite alternate;
+}
+
+@keyframes glowShift {
+    0% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(1.1);
+    }
+}
+
 .hero h1 {
     font-size: 150px;
     font-weight: 700;
@@ -846,27 +872,26 @@ body {
     margin-bottom: 1.5rem;
     position: relative;
     display: inline-block;
-    transition: all 0.3s ease;
-}
-
-.rainbow-text:hover {
-    background-image: linear-gradient(
-        90deg,
-        #ff0000,
-        #ffa500,
-        #ffff00,
-        #00ff00,
-        #00ffff,
-        #0000ff,
-        #ff00ff,
-        #ff0000
+    background: linear-gradient(
+        to right,
+        #ffffff 0%,
+        #4f4f4f 50%,
+        #1a1a1a 100%
     );
     background-size: 200% auto;
-    background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
-    animation: rainbow-text 3s linear infinite;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
 }
 
 .rainbow-text::after {
@@ -876,11 +901,28 @@ body {
     height: 100%;
     left: 0;
     top: 0;
-    filter: blur(20px);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    background: inherit;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 70%
+    );
+    filter: blur(10px);
+    opacity: 0.3;
     pointer-events: none;
+}
+
+/* Remove hover states since effect is now permanent */
+.rainbow-text:hover {
+    transform: none;
+    background: linear-gradient(
+        to right,
+        #ffffff 0%,
+        #4f4f4f 50%,
+        #1a1a1a 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .rainbow-text:hover::after {
@@ -1022,23 +1064,26 @@ body {
         font-size: 72px;
         margin: 10px 0 20px 0;
         opacity: 1;
-        background-image: linear-gradient(
-            90deg,
-            #ff0000,
-            #ffa500,
-            #ffff00,
-            #00ff00,
-            #00ffff,
-            #0000ff,
-            #ff00ff,
-            #ff0000
+        background: linear-gradient(
+            to right,
+            #ffffff 0%,
+            #4f4f4f 50%,
+            #1a1a1a 100%
         );
         background-size: 200% auto;
-        background-clip: text;
         -webkit-background-clip: text;
-        color: transparent;
-        animation: rainbow-text 3s linear infinite;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shine 3s linear infinite;
+    }
+
+    @keyframes shine {
+        0% {
+            background-position: 0% 50%;
+        }
+        100% {
+            background-position: 200% 50%;
+        }
     }
 
     .hero-content h2 {
